@@ -10,7 +10,7 @@ package Entidades;
  * @author alumno
  */
 public class AlumnoBean {
-    String nombre, primerapellido, segudoapellido, DNI;
+    String nombre, primerapellido, segundoapellido, DNI;
 
     public String getNombre() {
         return nombre;
@@ -28,12 +28,12 @@ public class AlumnoBean {
         this.primerapellido = primerapellido;
     }
 
-    public String getSegudoapellido() {
-        return segudoapellido;
+    public String getSegundoapellido() {
+        return segundoapellido;
     }
 
-    public void setSegudoapellido(String segudoapellido) {
-        this.segudoapellido = segudoapellido;
+    public void setSegundoapellido(String segundoapellido) {
+        this.segundoapellido = segundoapellido;
     }
 
     public String getDNI() {

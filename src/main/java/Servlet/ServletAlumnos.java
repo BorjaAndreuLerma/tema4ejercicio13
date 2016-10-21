@@ -10,6 +10,8 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.*;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -22,18 +24,48 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet(name = "ServletAlumnos", urlPatterns = {"/ServletAlumnos"})
 public class ServletAlumnos extends HttpServlet {
-    
-    List<AlumnoBean> lista = new ArrayList<>();
-    AlumnoBean alumno1 = new AlumnoBean();
-    alumno1.
-            
-    
+
+    private List<AlumnoBean> lista = new ArrayList<>();
+
+    @Override
+    public void init(ServletConfig config) throws ServletException {
+        super.init(config);
+        AlumnoBean alumno1 = new AlumnoBean();
+        alumno1.setDNI("1234A");
+        alumno1.setNombre("Nombre1");
+        alumno1.setPrimerapellido("Papellido1");
+        alumno1.setSegundoapellido("Sapellido1");
+        AlumnoBean alumno2 = new AlumnoBean();
+        alumno2.setDNI("4321A");
+        alumno2.setNombre("Nombre2");
+        alumno2.setPrimerapellido("Papellido2");
+        alumno2.setSegundoapellido("Sapellido2");
+        AlumnoBean alumno3 = new AlumnoBean();
+        alumno3.setDNI("1111A");
+        alumno3.setNombre("Nombre3");
+        alumno3.setPrimerapellido("Papellido3");
+        alumno3.setSegundoapellido("Sapellido3");
+        lista.add(alumno1);
+        lista.add(alumno2);
+        lista.add(alumno3);
+    }
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        
-        
+        AlumnoBean alumno = new AlumnoBean();
+        alumno.setDNI("El DNI introducido no corresponde con ninguno almacenado.");
+        for (int i = 0; i < lista.size(); i++) {
+            if (lista.get(i).getDNI().equalsIgnoreCase(request.getParameter("dni"))) {
+                alumno.setDNI(lista.get(i).getDNI());
+                alumno.setNombre(lista.get(i).getNombre());
+                alumno.setPrimerapellido(lista.get(i).getPrimerapellido());
+                alumno.setSegundoapellido(lista.get(i).getSegundoapellido());
+            }
+        }
+        request.setAttribute("alumno", alumno);
+        RequestDispatcher rd = this.getServletContext().getRequestDispatcher("/MuestraDatosAlumno.jsp");
+        rd.forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
